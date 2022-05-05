@@ -41,9 +41,9 @@ Serial.println("\nStarting connection to server...");
   if (client.connectSSL(server, 443)) {
     Serial.println("Connected to server");
     // Make a HTTP request:
-    client.println("GET /asciilogo.txt HTTP/1.1");
-    client.println("Host: arduino.tips");
-    client.println("Connection: close");
+    client.println("POST /sensors/airgradient/ID/measures HTTP/1.1");
+    client.println("content-type:application/json");
+    client.println(payload);
     client.println();
     Serial.println("Request sent");
   }
