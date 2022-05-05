@@ -35,7 +35,7 @@ Como se puede apreciar se ha modificado sobre la segunda versión del PCB, AirGr
 ## Cifrado con TLS
 El ESP8266 no es capaz de ejecutar las últimas versiones de TLS, pero un mínimo encriptado es mejor que nada, se debe cambiar la libreía empleada para usar HTTP por [WiFiNINA](https://www.arduino.cc/reference/en/libraries/wifinina/client.connectssl/) y usar el siguiente bloque de código:
 
-'''
+```
 Serial.println("\nStarting connection to server...");
   // if you get a connection, report back via serial:
   if (client.connectSSL(server, 443)) {
@@ -47,13 +47,13 @@ Serial.println("\nStarting connection to server...");
     client.println();
     Serial.println("Request sent");
   }
-'''
+```
 
 ## MQTT
 Un protocolo alternativo a HTTP, más orientado a IoT, ideal para este tipo de dispositivos es [MQTT](https://mqtt.org/) este ofrece una serie de ventajas a la hora de contar con múltiples dispositivos gracias a su modelo publicador/subscriptor.
 Para implementarlo se puede emplear la [librería de Arduino](https://docs.arduino.cc/tutorials/uno-wifi-rev2/uno-wifi-r2-mqtt-device-to-device), la modificación del código sería substituir las líneas dedicadas a la conexión HTTP por:
 
-'''
+```
 const char broker[] = "test.mosquitto.org";
 int port = 1883;
 const char topic[] = "air";
@@ -73,7 +73,7 @@ void setup() {
 Serial.print("Sending message to topic: ");
 Serial.println(topic);
 Serial.println(Rvalue);
-'''
+```
 
 Si se quisiera usar cifrado con tokens JWT no sería recomendable emplear código Ardunio debido a la limitada disponibilidad de [liberías y documentación](https://github.com/chrismoorhouse/ArduinoJWT). De igual manera, el ESP8266 no sería suficientemente potente para ejecutarlo, sería necesario recurrir al ESP32.
 
