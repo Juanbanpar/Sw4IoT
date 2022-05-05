@@ -33,7 +33,21 @@ Como se puede apreciar se ha modificado sobre la segunda versión del PCB, AirGr
 # Modificaciones en el *software*
 
 ## Cifrado con TLS
+El ESP8266 no es capaz de ejecutar las últimas versiones de TLS, pero un mínimo encriptado es mejor que nada, se debe cambiar la libreía empleada para usar HTTP por [WiFiNINA](https://www.arduino.cc/reference/en/libraries/wifinina/client.connectssl/) y usar el siguiente bloque de código:
 
+'''
+Serial.println("\nStarting connection to server...");
+  // if you get a connection, report back via serial:
+  if (client.connectSSL(server, 443)) {
+    Serial.println("Connected to server");
+    // Make a HTTP request:
+    client.println("GET /asciilogo.txt HTTP/1.1");
+    client.println("Host: arduino.tips");
+    client.println("Connection: close");
+    client.println();
+    Serial.println("Request sent");
+  }
+'''
 
 ## MQTT
 Un protocolo alternativo a HTTP, más orientado a IoT, ideal para este tipo de dispositivos es [MQTT](https://mqtt.org/) este ofrece una serie de ventajas a la hora de contar con múltiples dispositivos gracias a su modelo publicador/subscriptor.
